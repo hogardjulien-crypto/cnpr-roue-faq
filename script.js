@@ -1,5 +1,5 @@
 /* ----------------------------------------------------
-   MODE, SCORE, SONS, ROUE — inchangé
+   MODE, SCORE, SONS, ROUE
 ---------------------------------------------------- */
 
 let mode = "normal";
@@ -18,71 +18,24 @@ function addPoint() {
     let score = parseInt(document.getElementById(id).innerHTML);
     document.getElementById(id).innerHTML = score + points;
 
-    // Passe au joueur suivant
     currentPlayer++;
     if (currentPlayer > 4) currentPlayer = 1;
 
-    // Met à jour l'affichage du tour
     document.getElementById("turn").innerHTML = "🎯 Tour du Joueur " + currentPlayer;
 }
 
-
 const questions = [
-    {
-        q: "Qu’est‑ce que le CNPR ?",
-        hint: "Centre spécialisé URSSAF…",
-        answer: "Le CNPR est le Centre National de la Paie du Recouvrement, chargé de produire la paie pour le réseau URSSAF."
-    },
-    {
-        q: "Combien de bulletins de salaire sont traités chaque mois ?",
-        hint: "Plus de 6 000…",
-        answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois."
-    },
-    {
-        q: "Peut‑on centraliser les bulletins de salaire électroniquement ?",
-        hint: "Coffre‑fort numérique…",
-        answer: "Oui, via DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7."
-    },
-    {
-        q: "Comment sont calculés les titres‑restaurant ?",
-        hint: "Valeur faciale 11,52 €…",
-        answer: "Valeur faciale : 11,52 € • Part employeur : 6,91 € (60 %) • Part salarié : 4,61 € (40 %) • Prélèvement = 4,61 € × nombre de titres • Calcul basé sur M‑2 (ex : titres de mars → éléments de janvier)."
-    },
-    {
-        q: "Comment est calculé le salaire brut ?",
-        hint: "Points × valeur du point…",
-        answer: "(Coefficient + Compétences + Expérience) × Valeur du point (7,60939 €). Exemple : 403 + 14 + 82 = 499 points → 499 × 7,60939 = 3 797,09 € brut."
-    },
-    {
-        q: "Combien y a‑t‑il de CNPR en France ?",
-        hint: "Ils sont trois…",
-        answer: "Il existe 3 CNPR : Centre‑Val de Loire, Midi‑Pyrénées, Rhône‑Alpes."
-    },
-    {
-        q: "Combien de personnes travaillent dans le service ?",
-        hint: "Une petite équipe…",
-        answer: "CNPR Centre‑Val de Loire : 18 agents • Manager : Laetitia PERRIER."
-    },
-    {
-        q: "Que faire en cas d’erreur sur ma paie ?",
-        hint: "Contact GA…",
-        answer: "Contacter la Gestion Administrative : ga.cvl@urssaf.fr ou ticket GLPI via PRISM. Régularisation le mois suivant."
-    },
-    {
-        q: "Quel est le montant du PMSS ?",
-        hint: "Année 2026…",
-        answer: "Le PMSS 2026 est de 4 005 €."
-    },
-    {
-        q: "Qu’est‑ce que le Montant Net Social (MNS) ?",
-        hint: "Utilisé pour prestations…",
-        answer: "Le MNS est le revenu net après cotisations sociales obligatoires. Utilisé pour la prime d’activité, le RSA et d’autres prestations."
-    },
-    {
-        q: "Qu’est‑ce que la DSN ?",
-        hint: "Déclaration mensuelle…",
-        answer: "La DSN est une transmission mensuelle obligatoire : données de paie, cotisations, événements (arrêts, fins de contrat…). Elle remplace la majorité des anciennes déclarations sociales."
-    }
+    { q: "Qu’est‑ce que le CNPR ?", hint: "Centre spécialisé URSSAF…", answer: "Le CNPR est le Centre National de la Paie du Recouvrement." },
+    { q: "Combien de bulletins de salaire ?", hint: "Plus de 6 000…", answer: "Environ 6 200 à 6 300 bulletins par mois." },
+    { q: "Centralisation des bulletins ?", hint: "Coffre‑fort numérique…", answer: "Oui, via DIGIPOSTE." },
+    { q: "Titres‑restaurant ?", hint: "11,52 €…", answer: "Valeur 11,52 €, part employeur 6,91 €, salarié 4,61 €." },
+    { q: "Salaire brut ?", hint: "Points × valeur…", answer: "Points × 7,60939 €." },
+    { q: "Combien de CNPR ?", hint: "Ils sont trois…", answer: "3 CNPR en France." },
+    { q: "Effectif ?", hint: "Petite équipe…", answer: "18 agents, manager : Laetitia PERRIER." },
+    { q: "Erreur de paie ?", hint: "Contact GA…", answer: "ga.cvl@urssaf.fr ou ticket GLPI." },
+    { q: "PMSS ?", hint: "Année 2026…", answer: "4 005 €." },
+    { q: "Montant Net Social ?", hint: "Prestations…", answer: "Revenu net après cotisations obligatoires." },
+    { q: "DSN ?", hint: "Déclaration mensuelle…", answer: "Transmission mensuelle obligatoire des données de paie." }
 ];
 
 const wheel = document.getElementById("wheel");
@@ -103,7 +56,6 @@ function spin() {
     document.getElementById("sound-click").play();
     document.getElementById("sound-spin").play();
     document.getElementById("turn").innerHTML = "🎡 La roue tourne…";
-
 
     const random = Math.floor(Math.random() * questions.length);
     const angle = 360 * 5 + (360 - random * segmentAngle);
@@ -129,16 +81,3 @@ function spin() {
 
     }, 5000);
 }
-
-/* ----------------------------------------------------
-   QR CODE — version simple et 100% fonctionnelle
----------------------------------------------------- */
-
-new QRCode(document.getElementById("qrcode"), {
-    text: "https://hogardjulien-crypto.github.io/cnpr-roue-faq/",
-    width: 200,
-    height: 200,
-    colorDark: "#000000",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.H
-});
