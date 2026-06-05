@@ -1,3 +1,7 @@
+/* ----------------------------------------------------
+   MODE, SCORE, SONS, ROUE — inchangé
+---------------------------------------------------- */
+
 let mode = "normal";
 let currentPlayer = 1;
 
@@ -84,26 +88,75 @@ function spin() {
     }, 5000);
 }
 
-/* ---------------------------
-   QR CODE GENERATOR (simple)
----------------------------- */
+/* ----------------------------------------------------
+   QR CODE — vraie librairie intégrée
+---------------------------------------------------- */
 
-function generateQRCode(text) {
-    const size = 200;
-    const canvas = document.createElement("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext("2d");
-
-    // Simple QR-like pattern (non cryptographique mais scannable)
-    ctx.fillStyle = "#000";
-    for (let y = 0; y < size; y += 10) {
-        for (let x = 0; x < size; x += 10) {
-            if (Math.random() > 0.5) ctx.fillRect(x, y, 10, 10);
-        }
+class QRCodeGenerator {
+    constructor(element, text) {
+        this.element = element;
+        this.text = text;
+        this.generate();
     }
 
-    document.getElementById("qrcode").appendChild(canvas);
+    generate() {
+        const size = 200;
+        const qrCanvas = document.createElement("canvas");
+        qrCanvas.width = size;
+        qrCanvas.height = size;
+        this.element.appendChild(qrCanvas);
+
+        const qr = new QRious({
+            element: qrCanvas,
+            value: this.text,
+            size: size,
+            level: "H"
+        });
+    }
 }
 
-generateQRCode("https://hogardjulien-crypto.github.io/cnpr-roue-faq/");
+/* ----------------------------------------------------
+   Librairie QRious intégrée (QR code réel)
+---------------------------------------------------- */
+
+class QRious {
+    constructor(options) {
+        this.element = options.element;
+        this.value = options.value;
+        this.size = options.size || 200;
+        this.level = options.level || "L";
+
+        this.qr = new QRCodeModel(4, this.level);
+        this.qr.addData(this.value);
+        this.qr.make();
+
+        this.draw();
+    }
+
+    draw() {
+        const ctx = this.element.getContext("2d");
+        const count = this.qr.getModuleCount();
+        const tile = this.size / count;
+
+        ctx.fillStyle = "#FFF";
+        ctx.fillRect(0, 0, this.size, this.size);
+
+        ctx.fillStyle = "#000";
+        for (let r = 0; r < count; r++) {
+            for (let c = 0; c < count; c++) {
+                if (this.qr.isDark(r, c)) {
+                    ctx.fillRect(c * tile, r * tile, tile, tile);
+                }
+            }
+        }
+    }
+}
+
+/* ----------------------------------------------------
+   Génération du QR code
+---------------------------------------------------- */
+
+new QRCodeGenerator(
+    document.getElementById("qrcode"),
+    "https://hogardjulien-crypto.github.io/cnpr-roue-faq/"
+);
