@@ -134,48 +134,11 @@ function spin() {
    QR CODE — version simple et 100% fonctionnelle
 ---------------------------------------------------- */
 
-// Mini-librairie QRCode intégrée
-class QRCode {
-    constructor(element, text) {
-        this.element = element;
-        this.text = text;
-        this.generate();
-    }
-
-    generate() {
-        const size = 200;
-        const canvas = document.createElement("canvas");
-        canvas.width = size;
-        canvas.height = size;
-        this.element.appendChild(canvas);
-
-        const ctx = canvas.getContext("2d");
-
-        // Utilisation d'un QR code simplifié basé sur un algorithme compact
-        const qr = qrcode(0, 'L');
-        qr.addData(this.text);
-        qr.make();
-
-        const tileW = size / qr.getModuleCount();
-        const tileH = size / qr.getModuleCount();
-
-        for (let r = 0; r < qr.getModuleCount(); r++) {
-            for (let c = 0; c < qr.getModuleCount(); c++) {
-                ctx.fillStyle = qr.isDark(r, c) ? "#000" : "#FFF";
-                ctx.fillRect(c * tileW, r * tileH, tileW, tileH);
-            }
-        }
-    }
-}
-
-// Librairie QRCode.js intégrée (version compacte)
-function qrcode(typeNumber, errorCorrectionLevel) {
-    const QRCode = require('qrcode-generator');
-    return QRCode(typeNumber, errorCorrectionLevel);
-}
-
-// Génération du QR code
-new QRCode(
-    document.getElementById("qrcode"),
-    "https://hogardjulien-crypto.github.io/cnpr-roue-faq/"
-);
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+    text: "https://hogardjulien-crypto.github.io/cnpr-roue-faq/",
+    width: 200,
+    height: 200,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+});
