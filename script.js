@@ -134,11 +134,11 @@ function spin() {
    QR CODE — version simple et 100% fonctionnelle
 ---------------------------------------------------- */
 
-var qrcode = new QRCode(document.getElementById("qrcode"), {
+new QRCode(document.getElementById("qrcode"), {
     text: "https://hogardjulien-crypto.github.io/cnpr-roue-faq/",
     width: 200,
     height: 200,
-    colorDark : "#000000",
-    colorLight : "#ffffff",
-    correctLevel : QRCode.CorrectLevel.H
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
 });
