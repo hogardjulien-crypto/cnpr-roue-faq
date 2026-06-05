@@ -8,10 +8,21 @@
 <body>
 
 <h1>🎡 Roue FAQ Paie & RH — CNPR</h1>
+
+<div class="mode-container">
+    <button onclick="setMode('normal')" class="mode-btn">Mode Normal</button>
+    <button onclick="setMode('duel')" class="mode-btn">Mode Duel</button>
+    <button onclick="setMode('double')" class="mode-btn">Double Points</button>
+</div>
+
 <div id="arrow"></div>
 <div id="wheel"></div>
+
 <button onclick="spin()">🎯 Lancer la roue</button>
+
+<div id="hint"></div>
 <div id="result"></div>
+<div id="answer"></div>
 
 <script src="script.js"></script>
 </body>
