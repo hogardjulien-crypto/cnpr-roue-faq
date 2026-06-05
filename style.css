@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f5f7fa;
+}
+
+#wheel {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 10px solid #003366;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    transition: transform 5s cubic-bezier(.17,.67,.83,.67);
+}
+
+.segment {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 0%;
+    background: #0077c8;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px;
+}
+
+#arrow {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 30px solid red;
+    margin: 0 auto;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 18px;
+    background: #0077c8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
