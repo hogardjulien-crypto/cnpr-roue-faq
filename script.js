@@ -18,9 +18,14 @@ function addPoint() {
     let score = parseInt(document.getElementById(id).innerHTML);
     document.getElementById(id).innerHTML = score + points;
 
+    // Passe au joueur suivant
     currentPlayer++;
     if (currentPlayer > 4) currentPlayer = 1;
+
+    // Met à jour l'affichage du tour
+    document.getElementById("turn").innerHTML = "🎯 Tour du Joueur " + currentPlayer;
 }
+
 
 const questions = [
     {
