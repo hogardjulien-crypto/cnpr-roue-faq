@@ -3,10 +3,32 @@ body {
     text-align: center;
     background: #f5f7fa;
     padding: 10px;
+    color: #2E2E2E;
+}
+
+.logo {
+    width: 160px;
+    margin-bottom: 10px;
 }
 
 h1 {
-    font-size: 22px;
+    font-size: 24px;
+    color: #0053A0;
+}
+
+#scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.player {
+    background: #4DA3FF;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
 }
 
 .mode-container {
@@ -16,7 +38,7 @@ h1 {
 .mode-btn {
     padding: 8px 12px;
     margin: 5px;
-    background: #003366;
+    background: #0053A0;
     color: white;
     border: none;
     border-radius: 6px;
@@ -29,7 +51,7 @@ h1 {
     height: 90vw;
     max-height: 350px;
     border-radius: 50%;
-    border: 10px solid #003366;
+    border: 10px solid #0053A0;
     margin: 20px auto;
     position: relative;
     overflow: hidden;
@@ -43,7 +65,7 @@ h1 {
     top: 50%;
     left: 50%;
     transform-origin: 0% 0%;
-    background: #0077c8;
+    background: #4DA3FF;
     color: white;
     display: flex;
     justify-content: center;
@@ -65,7 +87,7 @@ h1 {
 button {
     padding: 12px 20px;
     font-size: 18px;
-    background: #0077c8;
+    background: #0053A0;
     color: white;
     border: none;
     border-radius: 6px;
