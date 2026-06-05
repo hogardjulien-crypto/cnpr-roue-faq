@@ -24,24 +24,59 @@ function addPoint() {
 
 const questions = [
     {
-        q: "Qu’est-ce que le CNPR ?",
-        hint: "Organisme chargé de la paie…",
-        answer: "Le CNPR est le Centre National de la Paie et du Recouvrement."
+        q: "Qu’est‑ce que le CNPR ?",
+        hint: "Centre spécialisé URSSAF…",
+        answer: "Le CNPR est le Centre National de la Paie du Recouvrement, chargé de produire la paie pour le réseau URSSAF."
     },
     {
-        q: "Quel est le PMSS 2026 ?",
-        hint: "Il augmente chaque année…",
-        answer: "Le PMSS 2026 est de 4 005 €."
+        q: "Combien de bulletins de salaire sont traités chaque mois ?",
+        hint: "Plus de 6 000…",
+        answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois."
     },
     {
-        q: "Comment sont calculés les titres-restaurant ?",
-        hint: "Part employeur + part salarié…",
-        answer: "Ils sont calculés selon la contribution employeur et la valeur faciale."
+        q: "Peut‑on centraliser les bulletins de salaire électroniquement ?",
+        hint: "Coffre‑fort numérique…",
+        answer: "Oui, via DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7."
+    },
+    {
+        q: "Comment sont calculés les titres‑restaurant ?",
+        hint: "Valeur faciale 11,52 €…",
+        answer: "Valeur faciale : 11,52 € • Part employeur : 6,91 € (60 %) • Part salarié : 4,61 € (40 %) • Prélèvement = 4,61 € × nombre de titres • Calcul basé sur M‑2 (ex : titres de mars → éléments de janvier)."
     },
     {
         q: "Comment est calculé le salaire brut ?",
-        hint: "Base × taux…",
-        answer: "Le salaire brut = base × taux + primes éventuelles."
+        hint: "Points × valeur du point…",
+        answer: "(Coefficient + Compétences + Expérience) × Valeur du point (7,60939 €). Exemple : 403 + 14 + 82 = 499 points → 499 × 7,60939 = 3 797,09 € brut."
+    },
+    {
+        q: "Combien y a‑t‑il de CNPR en France ?",
+        hint: "Ils sont trois…",
+        answer: "Il existe 3 CNPR : Centre‑Val de Loire, Midi‑Pyrénées, Rhône‑Alpes."
+    },
+    {
+        q: "Combien de personnes travaillent dans le service ?",
+        hint: "Une petite équipe…",
+        answer: "CNPR Centre‑Val de Loire : 18 agents • Manager : Laetitia PERRIER."
+    },
+    {
+        q: "Que faire en cas d’erreur sur ma paie ?",
+        hint: "Contact GA…",
+        answer: "Contacter la Gestion Administrative : ga.cvl@urssaf.fr ou ticket GLPI via PRISM. Régularisation le mois suivant."
+    },
+    {
+        q: "Quel est le montant du PMSS ?",
+        hint: "Année 2026…",
+        answer: "Le PMSS 2026 est de 4 005 €."
+    },
+    {
+        q: "Qu’est‑ce que le Montant Net Social (MNS) ?",
+        hint: "Utilisé pour prestations…",
+        answer: "Le MNS est le revenu net après cotisations sociales obligatoires. Utilisé pour la prime d’activité, le RSA et d’autres prestations."
+    },
+    {
+        q: "Qu’est‑ce que la DSN ?",
+        hint: "Déclaration mensuelle…",
+        answer: "La DSN est une transmission mensuelle obligatoire : données de paie, cotisations, événements (arrêts, fins de contrat…). Elle remplace la majorité des anciennes déclarations sociales."
     }
 ];
 
