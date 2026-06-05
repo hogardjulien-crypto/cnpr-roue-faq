@@ -2,11 +2,32 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background: #f5f7fa;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 22px;
+}
+
+.mode-container {
+    margin-bottom: 15px;
+}
+
+.mode-btn {
+    padding: 8px 12px;
+    margin: 5px;
+    background: #003366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 #wheel {
-    width: 400px;
-    height: 400px;
+    width: 90vw;
+    max-width: 350px;
+    height: 90vw;
+    max-height: 350px;
     border-radius: 50%;
     border: 10px solid #003366;
     margin: 20px auto;
@@ -27,7 +48,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
     padding: 5px;
 }
@@ -51,8 +72,21 @@ button {
     cursor: pointer;
 }
 
+#hint {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
 #result {
     margin-top: 20px;
     font-size: 22px;
+    font-weight: bold;
+}
+
+#answer {
+    margin-top: 15px;
+    font-size: 20px;
+    color: green;
     font-weight: bold;
 }
