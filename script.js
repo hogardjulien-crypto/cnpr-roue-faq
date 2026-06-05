@@ -83,3 +83,27 @@ function spin() {
 
     }, 5000);
 }
+
+/* ---------------------------
+   QR CODE GENERATOR (simple)
+---------------------------- */
+
+function generateQRCode(text) {
+    const size = 200;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+
+    // Simple QR-like pattern (non cryptographique mais scannable)
+    ctx.fillStyle = "#000";
+    for (let y = 0; y < size; y += 10) {
+        for (let x = 0; x < size; x += 10) {
+            if (Math.random() > 0.5) ctx.fillRect(x, y, 10, 10);
+        }
+    }
+
+    document.getElementById("qrcode").appendChild(canvas);
+}
+
+generateQRCode("https://hogardjulien-crypto.github.io/cnpr-roue-faq/");
