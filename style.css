@@ -112,3 +112,10 @@ button {
     color: green;
     font-weight: bold;
 }
+
+#turn {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0053A0;
+}
