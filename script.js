@@ -102,6 +102,8 @@ function spin() {
 
     document.getElementById("sound-click").play();
     document.getElementById("sound-spin").play();
+    document.getElementById("turn").innerHTML = "🎡 La roue tourne…";
+
 
     const random = Math.floor(Math.random() * questions.length);
     const angle = 360 * 5 + (360 - random * segmentAngle);
