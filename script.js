@@ -72,16 +72,20 @@ const questions = [
    CONSTRUCTION DE LA ROUE
 ---------------------------------------------------- */
 
-const wheel = document.getElementById("wheel");
-const segmentAngle = 360 / questions.length;
+window.onload = () => {
 
-questions.forEach((item, i) => {
-    const segment = document.createElement("div");
-    segment.className = "segment";
-    segment.style.transform = `rotate(${i * segmentAngle}deg) skewY(${90 - segmentAngle}deg)`;
-    segment.style.background = (i % 2 === 0) ? "#005AAA" : "#FFFFFF";
-    wheel.appendChild(segment);
-});
+    const wheel = document.getElementById("wheel");
+    const segmentAngle = 360 / questions.length;
+
+    questions.forEach((item, i) => {
+        const segment = document.createElement("div");
+        segment.className = "segment";
+        segment.style.transform = `rotate(${i * segmentAngle}deg) skewY(${90 - segmentAngle}deg)`;
+        segment.style.background = (i % 2 === 0) ? "#005AAA" : "#FFFFFF";
+        wheel.appendChild(segment);
+    });
+
+};
 
 /* ----------------------------------------------------
    SPIN
