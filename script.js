@@ -139,15 +139,23 @@ const questions = [
 ---------------------------------------------------- */
 
 const wheel = document.getElementById("wheel");
-const segmentAngle = 360 / questions.length;
+const segmentAngle = 360 / .length;
 
 questions.forEach((item, i) => {
     const segment = document.createElement("div");
     segment.className = "segment";
     segment.style.transform = `rotate(${i * segmentAngle}deg) skewY(${90 - segmentAngle}deg)`;
+
+    // 🎨 Alternance bleu URSSAF / blanc
+    segment.style.background = (i % 2 === 0) ? "#005AAA" : "#FFFFFF";
+
+    // 🎨 Texte lisible automatiquement
+    segment.style.color = (i % 2 === 0) ? "#FFFFFF" : "#005AAA";
+
     segment.innerHTML = item.q;
     wheel.appendChild(segment);
 });
+
 
 /* ----------------------------------------------------
    SPIN DE LA ROUE
