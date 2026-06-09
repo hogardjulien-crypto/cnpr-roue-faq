@@ -64,7 +64,6 @@ body {
     transition: transform 5s ease-out;
 }
 
-/* Les segments n'ont plus de couleur ici : géré par le script */
 .segment {
     position: absolute;
     width: 50%;
