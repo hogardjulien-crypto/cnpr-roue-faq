@@ -1,5 +1,5 @@
 /* ----------------------------------------------------
-   MODE, SCORE, SONS, ROUE
+   MODE, SCORE, SONS
 ---------------------------------------------------- */
 
 let mode = "normal";
@@ -25,79 +25,115 @@ function addPoint() {
 }
 
 /* ----------------------------------------------------
-   QUESTIONS OFFICIELLES CNPR
+   QUESTIONS OFFICIELLES CNPR — VERSION À JOUR
 ---------------------------------------------------- */
 
 const questions = [
-    { q: "ℹ️ Définition : Qu’est‑ce que le CNPR ?", hint: "Centre spécialisé URSSAF…", answer: "Le CNPR est le Centre National de la Paie du Recouvrement." },
-    { q: "Combien de bulletins de salaire sont traités chaque mois ?", hint: "Entre 6 200 et 6 300…", answer: "Environ 6 200 à 6 300 bulletins." },
-    { q: "Peut‑on centraliser les bulletins électroniquement ?", hint: "Coffre‑fort numérique…", answer: "Oui, via DIGIPOSTE." },
-    { q: "Comment sont calculés les titres‑restaurant ?", hint: "Valeur faciale 11,52 €…", answer: "Basé sur M‑2." },
-    { q: "Comment est calculé le salaire brut ?", hint: "Points × valeur du point…", answer: "Formule URSSAF." },
-    { q: "Combien de CNPR en France ?", hint: "Ils sont trois…", answer: "3 CNPR en France." },
-    { q: "Combien de personnes travaillent dans le service ?", hint: "Petite équipe…", answer: "18 agents." },
-    { q: "Que faire en cas d’erreur sur ma paie ?", hint: "Contact GA…", answer: "Contacter GA." },
-    { q: "Quel est le montant du PMSS ?", hint: "Année 2026…", answer: "4 005 €." },
-    { q: "Qu’est‑ce que le MNS ?", hint: "Prestations sociales…", answer: "Revenu net après cotisations." },
-    { q: "Qu’est‑ce que la DSN ?", hint: "Déclaration mensuelle…", answer: "Transmission mensuelle obligatoire." }
+
+    {
+        q: "Qu’est‑ce que le CNPR ?",
+        hint: "Centre spécialisé URSSAF…",
+        answer:
+            "Le CNPR est le Centre National de la Paie du Recouvrement. " +
+            "Il s’agit d’un centre spécialisé du réseau URSSAF chargé de produire la paie pour les agents, " +
+            "en appliquant les règles nationales et les procédures internes."
+    },
+
+    {
+        q: "Combien d’organismes sont gérés par le CNPR Centre‑Val de Loire ?",
+        hint: "Ils sont 9…",
+        answer: "Le CNPR Centre‑Val de Loire gère 9 organismes."
+    },
+
+    {
+        q: "Combien de bulletins de salaire sont traités chaque mois ?",
+        hint: "Entre 6 200 et 6 300…",
+        answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois."
+    },
+
+    {
+        q: "Peut‑on centraliser les bulletins de salaire électroniquement ?",
+        hint: "Coffre‑fort numérique…",
+        answer: "Oui, via le coffre‑fort numérique DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7."
+    },
+
+    {
+        q: "Comment sont calculés les titres‑restaurant ?",
+        hint: "Valeur faciale 12 €…",
+        answer:
+            "Paramètres 2026 :\n" +
+            "• Valeur faciale : 12,00 €\n" +
+            "• Part employeur : 7,20 € (60 %)\n" +
+            "• Part salarié : 4,80 € (40 %)\n\n" +
+            "Prélèvement : 4,80 € × nombre de titres attribués\n\n" +
+            "📌 Règle M‑2 :\n" +
+            "• Titres de mars → éléments de janvier\n" +
+            "• Titres d’avril → éléments de février"
+    },
+
+    {
+        q: "Comment est calculé le salaire brut ?",
+        hint: "Points × valeur du point…",
+        answer:
+            "Formule URSSAF : (Coefficient + Compétences + Expérience) × Valeur du point.\n" +
+            "Valeur du point 2026 : 7,60939 €"
+    },
+
+    {
+        q: "Combien de CNPR existe‑t‑il en France ?",
+        hint: "Ils sont trois…",
+        answer:
+            "Il existe 3 CNPR :\n" +
+            "• CNPR Centre‑Val de Loire\n" +
+            "• CNPR Midi‑Pyrénées\n" +
+            "• CNPR Rhône‑Alpes"
+    },
+
+    {
+        q: "Combien de personnes travaillent dans le service ?",
+        hint: "20 personnes…",
+        answer:
+            "Le CNPR Centre‑Val de Loire compte 20 agents, dont 1 manager et 3 assistantes techniques."
+    },
+
+    {
+        q: "Que faire si j’ai des questions sur ma paie ?",
+        hint: "GA / PRISM / DEA…",
+        answer:
+            "Vous pouvez contacter la Gestion Administrative (GA) :\n" +
+            "• Mail : ga.cvl@urssaf.fr\n" +
+            "• Ticket GLPI : portail PRISM\n" +
+            "• Formulaire dans le Dossier Électronique de l’Agent (DEA)\n" +
+            "  ➜ transmis automatiquement à la GA\n\n" +
+            "Les équipes GA procèdent aux vérifications et ajustements si nécessaire."
+    },
+
+    {
+        q: "Quel est le montant du PMSS ?",
+        hint: "Année 2026…",
+        answer: "Le PMSS 2026 est de 4 005 €."
+    },
+
+    {
+        q: "Qu’est‑ce que le Montant Net Social (MNS) ?",
+        hint: "Prestations sociales…",
+        answer:
+            "Le MNS est le revenu net après cotisations sociales obligatoires. " +
+            "Il sert notamment pour :\n" +
+            "• la Prime d’activité\n" +
+            "• le RSA\n" +
+            "• d’autres prestations sociales"
+    },
+
+    {
+        q: "Qu’est‑ce que la DSN ?",
+        hint: "Déclaration mensuelle…",
+        answer:
+            "La Déclaration Sociale Nominative (DSN) est une transmission mensuelle obligatoire regroupant :\n" +
+            "• données de paie\n" +
+            "• cotisations\n" +
+            "• événements (arrêts, fins de contrat…)\n\n" +
+            "Elle remplace la majorité des anciennes déclarations sociales."
+    }
+
 ];
-
-/* ----------------------------------------------------
-   CONSTRUCTION DE LA ROUE — SANS TEXTE
----------------------------------------------------- */
-
-const wheel = document.getElementById("wheel");
-const segmentAngle = 360 / questions.length;
-
-questions.forEach((item, i) => {
-    const segment = document.createElement("div");
-    segment.className = "segment";
-
-    // Position du segment
-    segment.style.transform = `rotate(${i * segmentAngle}deg) skewY(${90 - segmentAngle}deg)`;
-
-    // 🎨 Alternance bleu URSSAF / blanc
-    segment.style.background = (i % 2 === 0) ? "#005AAA" : "#FFFFFF";
-
-    // Aucun texte dans la roue
-    segment.innerHTML = "";
-
-    wheel.appendChild(segment);
-});
-
-/* ----------------------------------------------------
-   SPIN DE LA ROUE
----------------------------------------------------- */
-
-function spin() {
-    document.getElementById("answer").innerHTML = "";
-    document.getElementById("hint").innerHTML = "";
-
-    document.getElementById("sound-click").play();
-    document.getElementById("sound-spin").play();
-    document.getElementById("turn").innerHTML = "🎡 La roue tourne…";
-
-    const random = Math.floor(Math.random() * questions.length);
-    const angle = 360 * 5 + (360 - random * segmentAngle);
-    wheel.style.transform = `rotate(${angle}deg)`;
-
-    setTimeout(() => {
-        const item = questions[random];
-
-        document.getElementById("result").innerHTML =
-            "👉 Question tirée : <br><br><strong>" + item.q + "</strong>";
-
-        document.getElementById("hint").innerHTML =
-            "💡 Indice : " + item.hint;
-
-        setTimeout(() => {
-            document.getElementById("answer").innerHTML =
-                "✔️ Réponse : <br><br>" + item.answer.replace(/\n/g, "<br>");
-
-            document.getElementById("sound-ding").play();
-            addPoint();
-
-        }, 10000);
-
-    }, 5000);
-}
