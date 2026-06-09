@@ -71,7 +71,7 @@ body {
     top: 50%;
     left: 50%;
     transform-origin: 0% 0%;
-    background: #cfe2ff;
+    /* couleur gérée par le script */
     border: 1px solid #333;
     display: flex;
     justify-content: center;
