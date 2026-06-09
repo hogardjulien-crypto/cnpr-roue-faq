@@ -71,7 +71,6 @@ body {
     top: 50%;
     left: 50%;
     transform-origin: 0% 0%;
-    /* couleur gérée par le script */
     border: 1px solid #333;
     display: flex;
     justify-content: center;
@@ -79,4 +78,5 @@ body {
     font-size: 12px;
     padding: 5px;
     text-align: center;
+    font-weight: bold;
 }
