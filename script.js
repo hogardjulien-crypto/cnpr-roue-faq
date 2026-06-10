@@ -169,8 +169,15 @@ function spinWheel() {
 // ----------------------------
 function displayQuestion() {
     document.getElementById("questionText").textContent = currentQuestion.text;
-    document.getElementById("hintText").textContent = currentQuestion.hint;
-    document.getElementById("hintText").style.display = "block";
+
+    // Indice caché au début
+    document.getElementById("hintText").style.display = "none";
+
+    // Affichage de l’indice à 25 secondes
+    setTimeout(() => {
+        document.getElementById("hintText").textContent = currentQuestion.hint;
+        document.getElementById("hintText").style.display = "block";
+    }, 25000);
 
     document.getElementById("answerBox").style.display = "none";
     document.getElementById("validationBox").style.display = "none";
