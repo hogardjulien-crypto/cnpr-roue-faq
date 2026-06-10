@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Roue FAQ Paie & RH - CNPR</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roue FAQ CNPR</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<img src="image.png" class="logo">
+    <h1>Roue FAQ – CNPR Centre‑Val de Loire</h1>
 
-<h1>🎡 Roue FAQ Paie & RH — CNPR Centre-Val de Loire</h1>
+    <div id="gameContainer">
 
-<div id="scoreboard">
-    <div class="player">Joueur 1 : <span id="p1">0</span></div>
-    <div class="player">Joueur 2 : <span id="p2">0</span></div>
-    <div class="player">Joueur 3 : <span id="p3">0</span></div>
-    <div class="player">Joueur 4 : <span id="p4">0</span></div>
-</div>
+        <div id="scoreboard">
+            <div class="player" id="p1">Joueur 1 : <span>0</span></div>
+            <div class="player" id="p2">Joueur 2 : <span>0</span></div>
+            <div class="player" id="p3">Joueur 3 : <span>0</span></div>
+            <div class="player" id="p4">Joueur 4 : <span>0</span></div>
+        </div>
 
-<div id="turn">🎯 Tour du Joueur 1</div>
+        <div id="turnDisplay">Tour du Joueur 1</div>
 
-<div class="mode-container">
-    <button onclick="setMode('normal')" class="mode-btn">Mode Normal</button>
-    <button onclick="setMode('duel')" class="mode-btn">Mode Duel</button>
-    <button onclick="setMode('double')" class="mode-btn">Double Points</button>
-</div>
+        <div id="modeButtons">
+            <button onclick="setMode('normal')">Mode Normal</button>
+            <button onclick="setMode('double')">Mode Double Points</button>
+        </div>
 
-<div id="arrow"></div>
-<div id="wheel"></div>
+        <div id="wheelContainer">
+            <div id="arrow">▼</div>
+            <canvas id="wheel" width="400" height="400"></canvas>
+        </div>
 
-<button onclick="spin()">🎯 Lancer la roue</button>
+        <button id="spinButton" onclick="spinWheel()">🎡 Lancer la roue</button>
 
-<div id="hint"></div>
-<div id="result"></div>
-<div id="answer"></div>
+        <div id="questionBox">
+            <div id="questionText"></div>
+            <div id="hintText"></div>
+            <div id="timer"></div>
+            <div id="answerBox"></div>
 
-<audio id="sound-click" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
-<audio id="sound-spin" src="https://www.soundjay.com/mechanical/sounds/mechanical-gear-1.mp3"></audio>
-<audio id="sound-ding" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+            <div id="validationBox" style="display:none;">
+                <p>Est‑ce que le joueur a trouvé la bonne réponse ?</p>
+                <button onclick="validateAnswer(true)">Oui</button>
+                <button onclick="validateAnswer(false)">Non</button>
+            </div>
+        </div>
 
-<script src="script.js"></script>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
