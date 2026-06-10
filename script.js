@@ -9,7 +9,68 @@ const players = { 1: 0, 2: 0, 3: 0, 4: 0 };
 // ----------------------------
 // QUESTIONS CNPR (officielles)
 // ----------------------------
-const questions = [/* (coller ici le tableau fourni plus haut) */];
+const questions = [
+    {
+        text: "Qu’est‑ce que le CNPR ?",
+        hint: "Centre spécialisé URSSAF",
+        answer: "Le CNPR est le Centre National de la Paie du Recouvrement. Il produit la paie pour les agents du réseau URSSAF."
+    },
+    {
+        text: "Combien d’organismes sont gérés par le CNPR Centre‑Val de Loire ?",
+        hint: "Moins de 10",
+        answer: "Le CNPR Centre‑Val de Loire gère 9 organismes."
+    },
+    {
+        text: "Combien de bulletins de salaire sont traités chaque mois ?",
+        hint: "Entre 6000 et 6500",
+        answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois."
+    },
+    {
+        text: "Peut‑on centraliser les bulletins de salaire électroniquement ?",
+        hint: "Coffre‑fort",
+        answer: "Oui, via DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7."
+    },
+    {
+        text: "Comment sont calculés les titres restaurant ?",
+        hint: "60% employeur",
+        answer: "Valeur faciale : 12€. Employeur : 7,20€ (60%). Salarié : 4,80€ (40%). Règle M‑2 appliquée."
+    },
+    {
+        text: "Comment est calculé le salaire brut ?",
+        hint: "Formule URSSAF",
+        answer: "Formule : (Coefficient + Compétences + Expérience) × Valeur du point (7,60939€ en 2026)."
+    },
+    {
+        text: "Combien de CNPR existe‑t‑il en France ?",
+        hint: "Plus que 2",
+        answer: "Il existe 3 CNPR : Centre‑Val de Loire, Midi‑Pyrénées, Rhône‑Alpes."
+    },
+    {
+        text: "Combien de personnes travaillent dans le service ?",
+        hint: "20 agents",
+        answer: "20 agents dont 1 manager et 3 assistantes techniques."
+    },
+    {
+        text: "Que faire si j’ai des questions sur ma paie ?",
+        hint: "GA",
+        answer: "Contacter la GA : mail ga.cvl@urssaf.fr, ticket GLPI PRISM, ou formulaire DEA."
+    },
+    {
+        text: "Quel est le montant du PMSS ?",
+        hint: "4000€",
+        answer: "Le PMSS 2026 est de 4 005€."
+    },
+    {
+        text: "Qu’est‑ce que le Montant Net Social (MNS) ?",
+        hint: "Prestations sociales",
+        answer: "Le MNS est le revenu net après cotisations obligatoires. Sert pour RSA, Prime d’activité, etc."
+    },
+    {
+        text: "Qu’est‑ce que la DSN ?",
+        hint: "Déclaration mensuelle",
+        answer: "La DSN regroupe données de paie, cotisations et événements. Elle remplace les anciennes déclarations."
+    }
+];
 
 // ----------------------------
 // MODE
