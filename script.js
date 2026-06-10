@@ -7,70 +7,50 @@ let timeLeft = 30;
 const players = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
 // ----------------------------
-// QUESTIONS CNPR (officielles)
+// QUESTIONS CNPR
 // ----------------------------
 const questions = [
-    {
-        text: "Qu’est‑ce que le CNPR ?",
-        hint: "Centre spécialisé URSSAF",
-        answer: "Le CNPR est le Centre National de la Paie du Recouvrement. Il produit la paie pour les agents du réseau URSSAF."
-    },
-    {
-        text: "Combien d’organismes sont gérés par le CNPR Centre‑Val de Loire ?",
-        hint: "Moins de 10",
-        answer: "Le CNPR Centre‑Val de Loire gère 9 organismes."
-    },
-    {
-        text: "Combien de bulletins de salaire sont traités chaque mois ?",
-        hint: "Entre 6000 et 6500",
-        answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois."
-    },
-    {
-        text: "Peut‑on centraliser les bulletins de salaire électroniquement ?",
-        hint: "Coffre‑fort",
-        answer: "Oui, via DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7."
-    },
-    {
-        text: "Comment sont calculés les titres restaurant ?",
-        hint: "60% employeur",
-        answer: "Valeur faciale : 12€. Employeur : 7,20€ (60%). Salarié : 4,80€ (40%). Règle M‑2 appliquée."
-    },
-    {
-        text: "Comment est calculé le salaire brut ?",
-        hint: "Formule URSSAF",
-        answer: "Formule : (Coefficient + Compétences + Expérience) × Valeur du point (7,60939€ en 2026)."
-    },
-    {
-        text: "Combien de CNPR existe‑t‑il en France ?",
-        hint: "Plus que 2",
-        answer: "Il existe 3 CNPR : Centre‑Val de Loire, Midi‑Pyrénées, Rhône‑Alpes."
-    },
-    {
-        text: "Combien de personnes travaillent dans le service ?",
-        hint: "20 agents",
-        answer: "20 agents dont 1 manager et 3 assistantes techniques."
-    },
-    {
-        text: "Que faire si j’ai des questions sur ma paie ?",
-        hint: "GA",
-        answer: "Contacter la GA : mail ga.cvl@urssaf.fr, ticket GLPI PRISM, ou formulaire DEA."
-    },
-    {
-        text: "Quel est le montant du PMSS ?",
-        hint: "4000€",
-        answer: "Le PMSS 2026 est de 4 005€."
-    },
-    {
-        text: "Qu’est‑ce que le Montant Net Social (MNS) ?",
-        hint: "Prestations sociales",
-        answer: "Le MNS est le revenu net après cotisations obligatoires. Sert pour RSA, Prime d’activité, etc."
-    },
-    {
-        text: "Qu’est‑ce que la DSN ?",
-        hint: "Déclaration mensuelle",
-        answer: "La DSN regroupe données de paie, cotisations et événements. Elle remplace les anciennes déclarations."
-    }
+    { text: "Qu’est‑ce que le CNPR ?", hint: "Centre spécialisé URSSAF",
+      answer: "Le CNPR est le Centre National de la Paie du Recouvrement. Il produit la paie pour les agents du réseau URSSAF." },
+
+    { text: "Combien d’organismes sont gérés par le CNPR Centre‑Val de Loire ?", hint: "Moins de 10",
+      answer: "Le CNPR Centre‑Val de Loire gère 9 organismes." },
+
+    { text: "Combien de bulletins de salaire sont traités chaque mois ?", hint: "Entre 6000 et 6500",
+      answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois." },
+
+    { text: "Peut‑on centraliser les bulletins de salaire électroniquement ?", hint: "Coffre‑fort",
+      answer: "Oui, via DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7." },
+
+    { text: "Comment sont calculés les titres restaurant ?", hint: "60% employeur",
+      answer: "Valeur faciale : 12€. Employeur : 7,20€ (60%). Salarié : 4,80€ (40%). Règle M‑2 appliquée." },
+
+    { text: "Comment est calculé le salaire brut ?", hint: "Formule URSSAF",
+      answer: "Formule : (Coefficient + Compétences + Expérience) × Valeur du point (7,60939€ en 2026)." },
+
+    { text: "Combien de CNPR existe‑t‑il en France ?", hint: "Plus que 2",
+      answer: "Il existe 3 CNPR : Centre‑Val de Loire, Midi‑Pyrénées, Rhône‑Alpes." },
+
+    { text: "Combien de personnes travaillent dans le service ?", hint: "20 agents",
+      answer: "20 agents dont 1 manager et 3 assistantes techniques." },
+
+    { text: "Que faire si j’ai des questions sur ma paie ?", hint: "GA",
+      answer: "Contacter la GA : mail ga.cvl@urssaf.fr, ticket GLPI PRISM, ou formulaire DEA." },
+
+    { text: "Quel est le montant du PMSS ?", hint: "4000€",
+      answer: "Le PMSS 2026 est de 4 005€." },
+
+    { text: "Qu’est‑ce que le Montant Net Social (MNS) ?", hint: "Prestations sociales",
+      answer: "Le MNS est le revenu net après cotisations obligatoires. Sert pour RSA, Prime d’activité, etc." },
+
+    { text: "Qu’est‑ce que la DSN ?", hint: "Déclaration mensuelle",
+      answer: "La DSN regroupe données de paie, cotisations et événements. Elle remplace les anciennes déclarations." }
 ];
+
+// ----------------------------
+// ANTI‑DOUBLONS
+// ----------------------------
+let remainingQuestions = [...questions];
 
 // ----------------------------
 // MODE
@@ -80,7 +60,7 @@ function setMode(m) {
 }
 
 // ----------------------------
-// DESSIN DE LA ROUE
+// ROUE
 // ----------------------------
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
@@ -107,9 +87,6 @@ function drawWheel() {
 
 drawWheel();
 
-// ----------------------------
-// DESSIN DE LA ROUE EN ROTATION
-// ----------------------------
 function drawRotatingWheel(angleRotation) {
     ctx.clearRect(0, 0, 400, 400);
     ctx.save();
@@ -121,18 +98,25 @@ function drawRotatingWheel(angleRotation) {
 }
 
 // ----------------------------
-// ANIMATION DE LA ROUE
+// ANIMATION
 // ----------------------------
 let rotation = 0;
 let spinning = false;
 
 function spinWheel() {
+
+    if (remainingQuestions.length === 0) {
+        showFinalRanking();
+        return;
+    }
+
     if (spinning) return;
     spinning = true;
 
     const spinTime = 3000;
     const extraSpins = 5;
-    const finalIndex = Math.floor(Math.random() * questions.length);
+
+    const finalIndex = Math.floor(Math.random() * remainingQuestions.length);
     const finalAngle = finalIndex * angle;
 
     const targetRotation = extraSpins * 2 * Math.PI + finalAngle;
@@ -146,16 +130,18 @@ function spinWheel() {
             const easeOut = 1 - Math.pow(1 - progress, 3);
 
             rotation = easeOut * targetRotation;
-
             drawRotatingWheel(rotation);
             requestAnimationFrame(animateWheel);
+
         } else {
             rotation = targetRotation;
             drawRotatingWheel(rotation);
 
             spinning = false;
 
-            currentQuestion = questions[finalIndex];
+            currentQuestion = remainingQuestions[finalIndex];
+            remainingQuestions.splice(finalIndex, 1);
+
             displayQuestion();
         }
     }
@@ -169,11 +155,9 @@ function spinWheel() {
 function displayQuestion() {
     document.getElementById("questionText").textContent = currentQuestion.text;
 
-    // Indice caché au début
     const hint = document.getElementById("hintText");
     hint.style.display = "none";
 
-    // Affichage de l’indice à 25 secondes
     setTimeout(() => {
         hint.textContent = currentQuestion.hint;
         hint.style.display = "block";
@@ -186,7 +170,7 @@ function displayQuestion() {
 }
 
 // ----------------------------
-// TIMER (démarre immédiatement)
+// TIMER
 // ----------------------------
 function startTimer() {
     const timer = document.getElementById("timer");
@@ -230,8 +214,57 @@ function validateAnswer(isCorrect) {
     nextPlayer();
 }
 
+// ----------------------------
+// CHANGEMENT DE JOUEUR + HALO
+// ----------------------------
+function updateActivePlayerDisplay() {
+    document.querySelectorAll(".player").forEach(p => {
+        p.classList.remove("activePlayer");
+    });
+
+    document.getElementById("p" + currentPlayer).classList.add("activePlayer");
+}
+
 function nextPlayer() {
     currentPlayer++;
     if (currentPlayer > 4) currentPlayer = 1;
+
     document.getElementById("turnDisplay").textContent = `Tour du Joueur ${currentPlayer}`;
+    updateActivePlayerDisplay();
 }
+
+// ----------------------------
+// ÉCRAN DE FIN
+// ----------------------------
+function showFinalRanking() {
+    const endScreen = document.getElementById("endScreen");
+    const rankingDiv = document.getElementById("ranking");
+
+    const ranking = [
+        { player: "Joueur 1", score: players[1] },
+        { player: "Joueur 2", score: players[2] },
+        { player: "Joueur 3", score: players[3] },
+        { player: "Joueur 4", score: players[4] }
+    ];
+
+    ranking.sort((a, b) => b.score - a.score);
+
+    rankingDiv.innerHTML = ranking
+        .map((r, i) => `<p>${i + 1}. ${r.player} — <strong>${r.score} pts</strong></p>`)
+        .join("");
+
+    endScreen.style.display = "block";
+}
+
+// ----------------------------
+// REJOUER
+// ----------------------------
+function restartGame() {
+
+    remainingQuestions = [...questions];
+
+    players[1] = players[2] = players[3] = players[4] = 0;
+
+    document.querySelector("#p1 span").textContent = 0;
+    document.querySelector("#p2 span").textContent = 0;
+    document.querySelector("#
