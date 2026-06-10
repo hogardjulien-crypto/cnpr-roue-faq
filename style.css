@@ -1,25 +1,23 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     background: #F5F7FA;
+    text-align: center;
     color: #003366;
+}
+
+#logoURSSAF {
+    width: 180px;
+    margin-top: 20px;
 }
 
 h1 {
-    margin-top: 20px;
-    color: #003366;
-}
-
-#gameContainer {
-    width: 90%;
-    margin: auto;
-    max-width: 900px;
+    margin-top: 10px;
 }
 
 #scoreboard {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 .player {
@@ -35,7 +33,6 @@ h1 {
 #modeButtons button {
     margin: 5px;
     padding: 10px 20px;
-    font-size: 1rem;
 }
 
 #wheelContainer {
@@ -58,14 +55,10 @@ h1 {
     font-size: 1.2rem;
 }
 
-#questionBox {
-    margin-top: 30px;
-}
-
 #questionText {
     font-size: 2.2rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-top: 30px;
 }
 
 #hintText {
@@ -92,5 +85,4 @@ h1 {
 #validationBox button {
     margin: 10px;
     padding: 10px 20px;
-    font-size: 1.1rem;
 }
