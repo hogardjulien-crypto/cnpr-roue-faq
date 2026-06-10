@@ -94,6 +94,7 @@ function drawWheel() {
         ctx.arc(200, 200, 200, i * angle, (i + 1) * angle);
         ctx.fillStyle = i % 2 === 0 ? "#005AAA" : "#7FB3D5";
         ctx.fill();
+
         ctx.save();
         ctx.translate(200, 200);
         ctx.rotate(i * angle + angle / 2);
@@ -103,15 +104,64 @@ function drawWheel() {
         ctx.restore();
     }
 }
+
 drawWheel();
 
 // ----------------------------
-// SPIN
+// DESSIN DE LA ROUE EN ROTATION
 // ----------------------------
+function drawRotatingWheel(angleRotation) {
+    ctx.clearRect(0, 0, 400, 400);
+    ctx.save();
+    ctx.translate(200, 200);
+    ctx.rotate(angleRotation);
+    ctx.translate(-200, -200);
+    drawWheel();
+    ctx.restore();
+}
+
+// ----------------------------
+// ANIMATION DE LA ROUE
+// ----------------------------
+let rotation = 0;
+let spinning = false;
+
 function spinWheel() {
-    const index = Math.floor(Math.random() * questions.length);
-    currentQuestion = questions[index];
-    displayQuestion();
+    if (spinning) return;
+    spinning = true;
+
+    const spinTime = 3000; // durée de rotation
+    const extraSpins = 5;  // tours complets
+    const finalIndex = Math.floor(Math.random() * questions.length);
+    const finalAngle = finalIndex * angle;
+
+    const targetRotation = extraSpins * 2 * Math.PI + finalAngle;
+
+    const start = performance.now();
+
+    function animateWheel(now) {
+        const elapsed = now - start;
+
+        if (elapsed < spinTime) {
+            const progress = elapsed / spinTime;
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+
+            rotation = easeOut * targetRotation;
+
+            drawRotatingWheel(rotation);
+            requestAnimationFrame(animateWheel);
+        } else {
+            rotation = targetRotation;
+            drawRotatingWheel(rotation);
+
+            spinning = false;
+
+            currentQuestion = questions[finalIndex];
+            displayQuestion();
+        }
+    }
+
+    requestAnimationFrame(animateWheel);
 }
 
 // ----------------------------
