@@ -34,6 +34,7 @@
     </div>
 
     <button id="spinButton" onclick="spinWheel()">🎡 Lancer la roue</button>
+    <button id="restartButton" onclick="restartGame()">🔁 Rejouer</button>
 
     <div id="questionBox">
         <div id="questionText"></div>
@@ -46,6 +47,13 @@
             <button onclick="validateAnswer(true)">Oui</button>
             <button onclick="validateAnswer(false)">Non</button>
         </div>
+    </div>
+
+    <div id="endScreen" style="display:none;">
+        <h2>🎉 Fin de la partie !</h2>
+        <h3>Classement final :</h3>
+        <div id="ranking"></div>
+        <button onclick="restartGame()">🔁 Rejouer</button>
     </div>
 
     <script src="script.js"></script>
