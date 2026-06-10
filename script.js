@@ -130,13 +130,12 @@ function spinWheel() {
     if (spinning) return;
     spinning = true;
 
-    const spinTime = 3000; // durée de rotation
-    const extraSpins = 5;  // tours complets
+    const spinTime = 3000;
+    const extraSpins = 5;
     const finalIndex = Math.floor(Math.random() * questions.length);
     const finalAngle = finalIndex * angle;
 
     const targetRotation = extraSpins * 2 * Math.PI + finalAngle;
-
     const start = performance.now();
 
     function animateWheel(now) {
@@ -171,12 +170,13 @@ function displayQuestion() {
     document.getElementById("questionText").textContent = currentQuestion.text;
 
     // Indice caché au début
-    document.getElementById("hintText").style.display = "none";
+    const hint = document.getElementById("hintText");
+    hint.style.display = "none";
 
     // Affichage de l’indice à 25 secondes
     setTimeout(() => {
-        document.getElementById("hintText").textContent = currentQuestion.hint;
-        document.getElementById("hintText").style.display = "block";
+        hint.textContent = currentQuestion.hint;
+        hint.style.display = "block";
     }, 25000);
 
     document.getElementById("answerBox").style.display = "none";
@@ -186,27 +186,24 @@ function displayQuestion() {
 }
 
 // ----------------------------
-// TIMER
+// TIMER (démarre immédiatement)
 // ----------------------------
 function startTimer() {
     const timer = document.getElementById("timer");
-    timer.style.display = "none";
     timeLeft = 30;
 
-    setTimeout(() => {
-        timer.style.display = "block";
-        timer.textContent = "⏳ 30 secondes restantes";
+    timer.style.display = "block";
+    timer.textContent = `⏳ ${timeLeft} secondes restantes`;
 
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            timer.textContent = `⏳ ${timeLeft} secondes restantes`;
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timer.textContent = `⏳ ${timeLeft} secondes restantes`;
 
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                showAnswer();
-            }
-        }, 1000);
-    }, 15000);
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showAnswer();
+        }
+    }, 1000);
 }
 
 // ----------------------------
