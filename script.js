@@ -1,114 +1,118 @@
-/* ----------------------------------------------------
-   MODE, SCORE, SONS
----------------------------------------------------- */
-
-let mode = "normal";
+// ----------------------------
+// VARIABLES GLOBALES
+// ----------------------------
+let currentQuestion = null;
 let currentPlayer = 1;
+let mode = "normal";
+let timerInterval;
+let timeLeft = 30;
 
+const players = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0
+};
+
+// ----------------------------
+// QUESTIONS CNPR
+// ----------------------------
+const questions = [
+    { text: "Qu’est‑ce que le CNPR ?", hint: "Organisme régional", answer: "Centre National de la Paie et du Recouvrement" },
+    { text: "Quel est le délai M‑2 ?", hint: "Déclaration", answer: "Déclaration deux mois avant l’événement" },
+    // Ajoute ici tes 11 questions…
+];
+
+// ----------------------------
+// MODE DE JEU
+// ----------------------------
 function setMode(m) {
     mode = m;
-    document.getElementById("result").innerHTML = "Mode sélectionné : " + m;
-    document.getElementById("answer").innerHTML = "";
-    document.getElementById("hint").innerHTML = "";
 }
 
-function addPoint() {
-    let points = mode === "double" ? 2 : 1;
-    let id = "p" + currentPlayer;
-    let score = parseInt(document.getElementById(id).innerHTML);
-    document.getElementById(id).innerHTML = score + points;
+// ----------------------------
+// ROTATION DE LA ROUE
+// ----------------------------
+function spinWheel() {
+    const index = Math.floor(Math.random() * questions.length);
+    currentQuestion = questions[index];
 
+    displayQuestion();
+}
+
+// ----------------------------
+// AFFICHAGE QUESTION + INDICE
+// ----------------------------
+function displayQuestion() {
+    document.getElementById("questionText").textContent = currentQuestion.text;
+    document.getElementById("hintText").textContent = currentQuestion.hint;
+    document.getElementById("hintText").style.display = "block";
+
+    document.getElementById("answerBox").style.display = "none";
+    document.getElementById("validationBox").style.display = "none";
+
+    startTimer();
+}
+
+// ----------------------------
+// TIMER
+// ----------------------------
+function startTimer() {
+    const timer = document.getElementById("timer");
+    timer.style.display = "none";
+    timeLeft = 30;
+
+    // Affichage du timer après 15 secondes
+    setTimeout(() => {
+        timer.style.display = "block";
+        timer.textContent = "⏳ 30 secondes restantes";
+
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timer.textContent = `⏳ ${timeLeft} secondes restantes`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                showAnswer();
+            }
+        }, 1000);
+    }, 15000);
+}
+
+// ----------------------------
+// AFFICHAGE DE LA RÉPONSE
+// ----------------------------
+function showAnswer() {
+    const answerBox = document.getElementById("answerBox");
+    answerBox.style.display = "block";
+    answerBox.textContent = currentQuestion.answer;
+
+    document.getElementById("validationBox").style.display = "block";
+}
+
+// ----------------------------
+// VALIDATION + SCORE
+// ----------------------------
+function validateAnswer(isCorrect) {
+    let points = isCorrect ? 1 : -1;
+
+    if (mode === "double") {
+        points *= 2;
+    }
+
+    players[currentPlayer] += points;
+
+    document.querySelector(`#p${currentPlayer} span`).textContent = players[currentPlayer];
+
+    nextPlayer();
+}
+
+// ----------------------------
+// CHANGEMENT DE JOUEUR
+// ----------------------------
+function nextPlayer() {
     currentPlayer++;
     if (currentPlayer > 4) currentPlayer = 1;
 
-    document.getElementById("turn").innerHTML = "🎯 Tour du Joueur " + currentPlayer;
-}
-
-/* ----------------------------------------------------
-   QUESTIONS OFFICIELLES CNPR — 12 QUESTIONS
----------------------------------------------------- */
-
-const questions = [
-
-    { q: "Qu’est‑ce que le CNPR ?", hint: "Centre spécialisé URSSAF…",
-      answer: "Le CNPR est le Centre National de la Paie du Recouvrement. Il s’agit d’un centre spécialisé du réseau URSSAF chargé de produire la paie pour les agents, en appliquant les règles nationales et les procédures internes." },
-
-    { q: "Combien d’organismes sont gérés par le CNPR Centre‑Val de Loire ?", hint: "Ils sont 9…",
-      answer: "Le CNPR Centre‑Val de Loire gère 9 organismes." },
-
-    { q: "Combien de bulletins de salaire sont traités chaque mois ?", hint: "Entre 6 200 et 6 300…",
-      answer: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois." },
-
-    { q: "Peut‑on centraliser les bulletins de salaire électroniquement ?", hint: "Coffre‑fort numérique…",
-      answer: "Oui, via le coffre‑fort numérique DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7." },
-
-    { q: "Comment sont calculés les titres‑restaurant ?", hint: "Valeur faciale 12 €…",
-      answer: "Paramètres 2026 :\n• Valeur faciale : 12,00 €\n• Part employeur : 7,20 € (60 %)\n• Part salarié : 4,80 € (40 %)\n\nPrélèvement : 4,80 € × nombre de titres attribués\n\n📌 Règle M‑2 :\n• Titres de mars → éléments de janvier\n• Titres d’avril → éléments de février" },
-
-    { q: "Comment est calculé le salaire brut ?", hint: "Points × valeur du point…",
-      answer: "Formule URSSAF : (Coefficient + Compétences + Expérience) × Valeur du point.\nValeur du point 2026 : 7,60939 €" },
-
-    { q: "Combien de CNPR existe‑t‑il en France ?", hint: "Ils sont trois…",
-      answer: "Il existe 3 CNPR :\n• CNPR Centre‑Val de Loire\n• CNPR Midi‑Pyrénées\n• CNPR Rhône‑Alpes" },
-
-    { q: "Combien de personnes travaillent dans le service ?", hint: "20 personnes…",
-      answer: "Le CNPR Centre‑Val de Loire compte 20 agents, dont 1 manager et 3 assistantes techniques." },
-
-    { q: "Que faire si j’ai des questions sur ma paie ?", hint: "GA / PRISM / DEA…",
-      answer: "Vous pouvez contacter la Gestion Administrative (GA) :\n• Mail : ga.cvl@urssaf.fr\n• Ticket GLPI : portail PRISM\n• Formulaire dans le Dossier Électronique de l’Agent (DEA)\n  ➜ transmis automatiquement à la GA\n\nLes équipes GA procèdent aux vérifications et ajustements si nécessaire." },
-
-    { q: "Quel est le montant du PMSS ?", hint: "Année 2026…",
-      answer: "Le PMSS 2026 est de 4 005 €." },
-
-    { q: "Qu’est‑ce que le Montant Net Social (MNS) ?", hint: "Prestations sociales…",
-      answer: "Le MNS est le revenu net après cotisations sociales obligatoires. Il sert notamment pour :\n• la Prime d’activité\n• le RSA\n• d’autres prestations sociales" },
-
-    { q: "Qu’est‑ce que la DSN ?", hint: "Déclaration mensuelle…",
-      answer: "La Déclaration Sociale Nominative (DSN) est une transmission mensuelle obligatoire regroupant :\n• données de paie\n• cotisations\n• événements (arrêts, fins de contrat…)\n\nElle remplace la majorité des anciennes déclarations sociales." }
-
-];
-
-/* ----------------------------------------------------
-   CONSTRUCTION DE LA ROUE
----------------------------------------------------- */
-
-window.onload = () => {
-
-    const wheel = document.getElementById("wheel");
-    const segmentAngle = 360 / questions.length;
-
-    questions.forEach((item, i) => {
-        const segment = document.createElement("div");
-        segment.className = "segment";
-        segment.style.transform = `rotate(${i * segmentAngle}deg) skewY(${90 - segmentAngle}deg)`;
-        segment.style.background = (i % 2 === 0) ? "#005AAA" : "#FFFFFF";
-        wheel.appendChild(segment);
-    });
-
-};
-
-/* ----------------------------------------------------
-   SPIN
----------------------------------------------------- */
-
-function spin() {
-    document.getElementById("sound-spin").play();
-
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    const rotation = 3600 + (360 / questions.length) * randomIndex;
-
-    wheel.style.transform = `rotate(${rotation}deg)`;
-
-    setTimeout(() => {
-        const q = questions[randomIndex];
-        document.getElementById("hint").innerHTML = "💡 Indice : " + q.hint;
-
-        setTimeout(() => {
-            document.getElementById("result").innerHTML = "❓ " + q.q;
-            document.getElementById("answer").innerHTML = "📘 " + q.answer;
-            document.getElementById("sound-ding").play();
-            addPoint();
-        }, 3000);
-
-    }, 5000);
+    document.getElementById("turnDisplay").textContent = `Tour du Joueur ${currentPlayer}`;
 }
