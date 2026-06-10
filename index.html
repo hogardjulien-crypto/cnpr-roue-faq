@@ -3,50 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roue FAQ CNPR</title>
+    <title>Roue FAQ – CNPR</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Roue FAQ – CNPR Centre‑Val de Loire</h1>
+    <header>
+        <img src="logo_urssaf.png" id="logoURSSAF" alt="Logo URSSAF">
+        <h1>Roue FAQ – CNPR Centre‑Val de Loire</h1>
+    </header>
 
-    <div id="gameContainer">
+    <div id="scoreboard">
+        <div class="player" id="p1">Joueur 1 : <span>0</span></div>
+        <div class="player" id="p2">Joueur 2 : <span>0</span></div>
+        <div class="player" id="p3">Joueur 3 : <span>0</span></div>
+        <div class="player" id="p4">Joueur 4 : <span>0</span></div>
+    </div>
 
-        <div id="scoreboard">
-            <div class="player" id="p1">Joueur 1 : <span>0</span></div>
-            <div class="player" id="p2">Joueur 2 : <span>0</span></div>
-            <div class="player" id="p3">Joueur 3 : <span>0</span></div>
-            <div class="player" id="p4">Joueur 4 : <span>0</span></div>
+    <div id="turnDisplay">Tour du Joueur 1</div>
+
+    <div id="modeButtons">
+        <button onclick="setMode('normal')">Mode Normal</button>
+        <button onclick="setMode('double')">Mode Double Points</button>
+    </div>
+
+    <div id="wheelContainer">
+        <div id="arrow">▼</div>
+        <canvas id="wheel" width="400" height="400"></canvas>
+    </div>
+
+    <button id="spinButton" onclick="spinWheel()">🎡 Lancer la roue</button>
+
+    <div id="questionBox">
+        <div id="questionText"></div>
+        <div id="hintText"></div>
+        <div id="timer"></div>
+        <div id="answerBox"></div>
+
+        <div id="validationBox" style="display:none;">
+            <p>Est‑ce que le joueur a trouvé la bonne réponse ?</p>
+            <button onclick="validateAnswer(true)">Oui</button>
+            <button onclick="validateAnswer(false)">Non</button>
         </div>
-
-        <div id="turnDisplay">Tour du Joueur 1</div>
-
-        <div id="modeButtons">
-            <button onclick="setMode('normal')">Mode Normal</button>
-            <button onclick="setMode('double')">Mode Double Points</button>
-        </div>
-
-        <div id="wheelContainer">
-            <div id="arrow">▼</div>
-            <canvas id="wheel" width="400" height="400"></canvas>
-        </div>
-
-        <button id="spinButton" onclick="spinWheel()">🎡 Lancer la roue</button>
-
-        <div id="questionBox">
-            <div id="questionText"></div>
-            <div id="hintText"></div>
-            <div id="timer"></div>
-            <div id="answerBox"></div>
-
-            <div id="validationBox" style="display:none;">
-                <p>Est‑ce que le joueur a trouvé la bonne réponse ?</p>
-                <button onclick="validateAnswer(true)">Oui</button>
-                <button onclick="validateAnswer(false)">Non</button>
-            </div>
-        </div>
-
     </div>
 
     <script src="script.js"></script>
