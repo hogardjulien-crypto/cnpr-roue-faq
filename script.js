@@ -261,10 +261,42 @@ function showFinalRanking() {
 // ----------------------------
 function restartGame() {
 
+    // Réinitialiser les questions restantes
     remainingQuestions = [...questions];
 
-    players[1] = players[2] = players[3] = players[4] = 0;
+    // Réinitialiser les scores
+    players[1] = 0;
+    players[2] = 0;
+    players[3] = 0;
+    players[4] = 0;
 
     document.querySelector("#p1 span").textContent = 0;
     document.querySelector("#p2 span").textContent = 0;
-    document.querySelector("#
+    document.querySelector("#p3 span").textContent = 0;
+    document.querySelector("#p4 span").textContent = 0;
+
+    // Revenir au joueur 1
+    currentPlayer = 1;
+    document.getElementById("turnDisplay").textContent = "Tour du Joueur 1";
+    updateActivePlayerDisplay();
+
+    // Effacer question / indice / réponse
+    document.getElementById("questionText").textContent = "";
+    document.getElementById("hintText").style.display = "none";
+    document.getElementById("answerBox").style.display = "none";
+    document.getElementById("validationBox").style.display = "none";
+
+    // Arrêter le timer si en cours
+    clearInterval(timerInterval);
+    document.getElementById("timer").style.display = "none";
+
+    // Réinitialiser la rotation et redessiner la roue
+    rotation = 0;
+    drawRotatingWheel(0);
+
+    // Masquer l'écran de fin si visible
+    const endScreen = document.getElementById("endScreen");
+    if (endScreen) endScreen.style.display = "none";
+
+    alert("🔁 Nouvelle partie ! La roue et les questions ont été réinitialisées.");
+}
