@@ -4,6 +4,7 @@ body {
     background: #f5f5f5;
 }
 
+/* LOGO */
 #urssafLogo {
     position: absolute;
     top: 15px;
@@ -13,10 +14,49 @@ body {
     z-index: 1000;
 }
 
-h1 {
-    margin-top: 20px;
+/* TABLEAU SCORES LATERAL */
+#scoreSidebar {
+    position: fixed;
+    left: 10px;
+    top: 120px;
+    width: 180px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 15px #0003;
+    text-align: left;
+    z-index: 900;
 }
 
+#scoreSidebar h3 {
+    margin-top: 0;
+    color: #005AAA;
+    font-size: 20px;
+    text-align: center;
+}
+
+#scoreSidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#scoreSidebar li {
+    padding: 8px 5px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+#scoreSidebar li:last-child {
+    border-bottom: none;
+}
+
+#scoreSidebar .activeTeam {
+    font-weight: bold;
+    color: #0078d4;
+}
+
+/* EQUIPES */
 #teams {
     display: flex;
     justify-content: center;
@@ -38,17 +78,18 @@ h1 {
     box-shadow: 0 0 20px #0078d4;
 }
 
-#scores {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
+/* TIMER */
 #timer {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
+#pauseTimerBtn {
+    margin-left: 10px;
+}
+
+/* ROUE */
 #wheel-container {
     position: relative;
     display: inline-block;
@@ -63,6 +104,7 @@ h1 {
     color: red;
 }
 
+/* POPUPS */
 .popup {
     position: fixed;
     top: 50%;
@@ -79,6 +121,7 @@ h1 {
     display: none;
 }
 
+/* REPONSE */
 #answerBox {
     margin-top: 20px;
     font-size: 20px;
@@ -86,6 +129,7 @@ h1 {
     font-weight: bold;
 }
 
+/* BOUTONS */
 button {
     margin-top: 20px;
     padding: 12px 20px;
