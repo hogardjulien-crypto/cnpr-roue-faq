@@ -142,7 +142,6 @@ function startTimer() {
 
         if (remainingTime <= 0) {
             clearInterval(timerInterval);
-            // temps écoulé → équipe terminée
             showNextTeamPopup();
         }
     }, 1000);
@@ -158,8 +157,11 @@ function formatTime(sec) {
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
-// démarrer le chrono pour la première équipe
-startTimer();
+// bouton démarrage chrono
+document.getElementById("startTimerBtn").addEventListener("click", () => {
+    startTimer();
+    document.getElementById("startTimerBtn").style.display = "none";
+});
 
 // -----------------------------
 // Spin centré sur le segment
@@ -173,7 +175,6 @@ document.getElementById("spinBtn").addEventListener("click", () => {
         .filter(i => !usedQuestions.includes(i));
 
     if (available.length === 0) {
-        // équipe a répondu aux 12 questions
         stopTimer();
         showNextTeamPopup();
         spinning = false;
@@ -215,12 +216,12 @@ function showQuestion(index) {
     document.getElementById("questionText").textContent = questions[index].q;
     document.getElementById("questionBox").style.display = "block";
 
-    // proposer mode double points (une seule fois par équipe)
+    document.getElementById("answerBox").classList.add("hidden");
+
     if (!doubleUsed[activeTeam]) {
         showPopup("doublePopup");
     } else {
         doubleActive = false;
-        // lancer le délai de 10 secondes avant validation
         setTimeout(() => {
             showPopup("answerPopup");
         }, 10000);
@@ -250,18 +251,31 @@ document.getElementById("doubleNo").addEventListener("click", () => {
 });
 
 // -----------------------------
+// Affichage réponse
+// -----------------------------
+function showAnswer() {
+    const answerBox = document.getElementById("answerBox");
+    const answerText = document.getElementById("answerText");
+
+    answerText.textContent = "Réponse : " + questions[currentQuestionIndex].a;
+    answerBox.classList.remove("hidden");
+}
+
+// -----------------------------
 // Gestion popup validation réponse
 // -----------------------------
 document.getElementById("answerYes").addEventListener("click", () => {
     applyScoreChange(true);
     hidePopup("answerPopup");
-    nextTurn();
+    showAnswer();
+    setTimeout(() => nextTurn(), 3000);
 });
 
 document.getElementById("answerNo").addEventListener("click", () => {
     applyScoreChange(false);
     hidePopup("answerPopup");
-    nextTurn();
+    showAnswer();
+    setTimeout(() => nextTurn(), 3000);
 });
 
 // -----------------------------
@@ -272,7 +286,7 @@ function applyScoreChange(isCorrect) {
 
     if (doubleActive) {
         delta *= 2;
-        doubleActive = false; // utilisé pour cette question uniquement
+        doubleActive = false;
     }
 
     let newScore = teams[activeTeam].score + delta;
@@ -286,7 +300,6 @@ function applyScoreChange(isCorrect) {
 // Gestion des tours / équipes
 // -----------------------------
 function nextTurn() {
-    // si l’équipe a répondu aux 12 questions
     if (usedQuestions.length >= questions.length) {
         stopTimer();
         showNextTeamPopup();
@@ -315,7 +328,7 @@ function goToNextTeam() {
     }
 
     updateActiveTeamHalo();
-    startTimer();
+    document.getElementById("startTimerBtn").style.display = "block";
 }
 
 // -----------------------------
