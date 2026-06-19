@@ -18,6 +18,7 @@ let doubleActive = false;
 // chrono
 let timerInterval = null;
 let remainingTime = 5 * 60; // 5 minutes en secondes
+let timerPaused = false;
 
 // -----------------------------
 // 12 questions CNPR officielles
@@ -108,13 +109,22 @@ function drawWheel() {
 drawWheel();
 
 // -----------------------------
-// Affichage scores + halo
+// Tableau scores latéral + halo
 // -----------------------------
 function updateScoresDisplay() {
-    const scoresDiv = document.getElementById("scores");
-    scoresDiv.textContent = teams
-        .map((t, i) => `${t.name} : ${t.score} pts`)
-        .join(" | ");
+    const scoreList = document.getElementById("scoreList");
+    scoreList.innerHTML = "";
+
+    teams.forEach((team, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${team.name} : ${team.score} pts`;
+
+        if (index === activeTeam) {
+            li.classList.add("activeTeam");
+        }
+
+        scoreList.appendChild(li);
+    });
 }
 
 function updateActiveTeamHalo() {
@@ -132,17 +142,23 @@ updateActiveTeamHalo();
 function startTimer() {
     clearInterval(timerInterval);
     remainingTime = 5 * 60;
+    timerPaused = false;
+
+    document.getElementById("pauseTimerBtn").classList.remove("hidden");
+    document.getElementById("pauseTimerBtn").textContent = "⏸ Pause";
 
     const timerDiv = document.getElementById("timer");
     timerDiv.textContent = formatTime(remainingTime);
 
     timerInterval = setInterval(() => {
-        remainingTime--;
-        timerDiv.textContent = formatTime(remainingTime);
+        if (!timerPaused) {
+            remainingTime--;
+            timerDiv.textContent = formatTime(remainingTime);
 
-        if (remainingTime <= 0) {
-            clearInterval(timerInterval);
-            showNextTeamPopup();
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                showNextTeamPopup();
+            }
         }
     }, 1000);
 }
@@ -161,6 +177,17 @@ function formatTime(sec) {
 document.getElementById("startTimerBtn").addEventListener("click", () => {
     startTimer();
     document.getElementById("startTimerBtn").style.display = "none";
+});
+
+// bouton pause / reprise
+document.getElementById("pauseTimerBtn").addEventListener("click", () => {
+    if (!timerPaused) {
+        timerPaused = true;
+        document.getElementById("pauseTimerBtn").textContent = "▶️ Reprendre";
+    } else {
+        timerPaused = false;
+        document.getElementById("pauseTimerBtn").textContent = "⏸ Pause";
+    }
 });
 
 // -----------------------------
@@ -329,6 +356,7 @@ function goToNextTeam() {
 
     updateActiveTeamHalo();
     document.getElementById("startTimerBtn").style.display = "block";
+    document.getElementById("pauseTimerBtn").classList.add("hidden");
 }
 
 // -----------------------------
