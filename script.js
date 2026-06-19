@@ -11,6 +11,14 @@ let activeTeam = 0;
 let usedQuestions = [];
 let spinning = false;
 
+// mode double : une seule fois par équipe
+const doubleUsed = [false, false, false];
+let doubleActive = false;
+
+// chrono
+let timerInterval = null;
+let remainingTime = 5 * 60; // 5 minutes en secondes
+
 // -----------------------------
 // 12 questions CNPR officielles
 // -----------------------------
@@ -77,7 +85,13 @@ function drawWheel() {
         ctx.beginPath();
         ctx.moveTo(250, 250);
         ctx.fillStyle = i % 2 === 0 ? "#0078d4" : "#00a4ef";
-        ctx.arc(250, 250, 250, (i * segmentAngle) * Math.PI / 180, ((i + 1) * segmentAngle) * Math.PI / 180);
+        ctx.arc(
+            250,
+            250,
+            250,
+            (i * segmentAngle) * Math.PI / 180,
+            ((i + 1) * segmentAngle) * Math.PI / 180
+        );
         ctx.fill();
 
         ctx.save();
@@ -94,6 +108,60 @@ function drawWheel() {
 drawWheel();
 
 // -----------------------------
+// Affichage scores + halo
+// -----------------------------
+function updateScoresDisplay() {
+    const scoresDiv = document.getElementById("scores");
+    scoresDiv.textContent = teams
+        .map((t, i) => `${t.name} : ${t.score} pts`)
+        .join(" | ");
+}
+
+function updateActiveTeamHalo() {
+    document.querySelectorAll(".team").forEach((el, index) => {
+        el.classList.toggle("active", index === activeTeam);
+    });
+}
+
+updateScoresDisplay();
+updateActiveTeamHalo();
+
+// -----------------------------
+// Chronomètre 5 minutes
+// -----------------------------
+function startTimer() {
+    clearInterval(timerInterval);
+    remainingTime = 5 * 60;
+
+    const timerDiv = document.getElementById("timer");
+    timerDiv.textContent = formatTime(remainingTime);
+
+    timerInterval = setInterval(() => {
+        remainingTime--;
+        timerDiv.textContent = formatTime(remainingTime);
+
+        if (remainingTime <= 0) {
+            clearInterval(timerInterval);
+            // temps écoulé → équipe terminée
+            showNextTeamPopup();
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+}
+
+// démarrer le chrono pour la première équipe
+startTimer();
+
+// -----------------------------
 // Spin centré sur le segment
 // -----------------------------
 document.getElementById("spinBtn").addEventListener("click", () => {
@@ -105,8 +173,10 @@ document.getElementById("spinBtn").addEventListener("click", () => {
         .filter(i => !usedQuestions.includes(i));
 
     if (available.length === 0) {
-        alert(`${teams[activeTeam].name} a terminé ! Score : ${teams[activeTeam].score}`);
-        nextTeam();
+        // équipe a répondu aux 12 questions
+        stopTimer();
+        showNextTeamPopup();
+        spinning = false;
         return;
     }
 
@@ -123,56 +193,138 @@ document.getElementById("spinBtn").addEventListener("click", () => {
 });
 
 // -----------------------------
-// Affichage question
+// POPUP helpers
 // -----------------------------
+function showPopup(id) {
+    document.getElementById(id).classList.remove("hidden");
+}
+
+function hidePopup(id) {
+    document.getElementById(id).classList.add("hidden");
+}
+
+// -----------------------------
+// Affichage question + popup double
+// -----------------------------
+let currentQuestionIndex = null;
+
 function showQuestion(index) {
+    currentQuestionIndex = index;
     usedQuestions.push(index);
 
     document.getElementById("questionText").textContent = questions[index].q;
     document.getElementById("questionBox").style.display = "block";
 
-    document.getElementById("validateBtn").onclick = () => {
-        teams[activeTeam].score++;
-        nextTurn();
-    };
+    // proposer mode double points (une seule fois par équipe)
+    if (!doubleUsed[activeTeam]) {
+        showPopup("doublePopup");
+    } else {
+        doubleActive = false;
+        // lancer le délai de 10 secondes avant validation
+        setTimeout(() => {
+            showPopup("answerPopup");
+        }, 10000);
+    }
 }
 
 // -----------------------------
-// Gestion des équipes
+// Gestion popup mode double
+// -----------------------------
+document.getElementById("doubleYes").addEventListener("click", () => {
+    doubleActive = true;
+    doubleUsed[activeTeam] = true;
+    hidePopup("doublePopup");
+
+    setTimeout(() => {
+        showPopup("answerPopup");
+    }, 10000);
+});
+
+document.getElementById("doubleNo").addEventListener("click", () => {
+    doubleActive = false;
+    hidePopup("doublePopup");
+
+    setTimeout(() => {
+        showPopup("answerPopup");
+    }, 10000);
+});
+
+// -----------------------------
+// Gestion popup validation réponse
+// -----------------------------
+document.getElementById("answerYes").addEventListener("click", () => {
+    applyScoreChange(true);
+    hidePopup("answerPopup");
+    nextTurn();
+});
+
+document.getElementById("answerNo").addEventListener("click", () => {
+    applyScoreChange(false);
+    hidePopup("answerPopup");
+    nextTurn();
+});
+
+// -----------------------------
+// Application du score (+1 / -1, double éventuel, jamais négatif)
+// -----------------------------
+function applyScoreChange(isCorrect) {
+    let delta = isCorrect ? 1 : -1;
+
+    if (doubleActive) {
+        delta *= 2;
+        doubleActive = false; // utilisé pour cette question uniquement
+    }
+
+    let newScore = teams[activeTeam].score + delta;
+    if (newScore < 0) newScore = 0;
+
+    teams[activeTeam].score = newScore;
+    updateScoresDisplay();
+}
+
+// -----------------------------
+// Gestion des tours / équipes
 // -----------------------------
 function nextTurn() {
+    // si l’équipe a répondu aux 12 questions
     if (usedQuestions.length >= questions.length) {
-        alert(`${teams[activeTeam].name} a terminé ! Score : ${teams[activeTeam].score}`);
-        nextTeam();
+        stopTimer();
+        showNextTeamPopup();
         return;
     }
 }
 
-function nextTeam() {
+function showNextTeamPopup() {
+    showPopup("nextTeamPopup");
+}
+
+document.getElementById("nextTeamYes").addEventListener("click", () => {
+    hidePopup("nextTeamPopup");
+    goToNextTeam();
+});
+
+function goToNextTeam() {
     activeTeam++;
     usedQuestions = [];
+    doubleActive = false;
 
     if (activeTeam >= teams.length) {
+        stopTimer();
         showFinalScores();
         return;
     }
 
     updateActiveTeamHalo();
+    startTimer();
 }
-
-function updateActiveTeamHalo() {
-    document.querySelectorAll(".team").forEach((el, index) => {
-        el.classList.toggle("active", index === activeTeam);
-    });
-}
-
-updateActiveTeamHalo();
 
 // -----------------------------
 // Scores finaux
 // -----------------------------
 function showFinalScores() {
     let msg = "🏆 Scores finaux :\n\n";
-    teams.forEach(t => msg += `${t.name} : ${t.score} points\n`);
+    teams.forEach(t => {
+        msg += `${t.name} : ${t.score} points\n`;
+    });
     alert(msg);
 }
