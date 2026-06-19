@@ -76,3 +76,12 @@ button {
     font-size: 18px;
     cursor: pointer;
 }
+
+#urssafLogo {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    height: 70px;
+    width: auto;
+    z-index: 1000;
+}
