@@ -8,24 +8,61 @@ const teams = [
 ];
 
 let activeTeam = 0;
-let questionIndex = 0;
+let usedQuestions = [];
+let spinning = false;
 
 // -----------------------------
-// Questions (12 segments)
+// 12 questions CNPR officielles
 // -----------------------------
 const questions = [
-    "Question 1…",
-    "Question 2…",
-    "Question 3…",
-    "Question 4…",
-    "Question 5…",
-    "Question 6…",
-    "Question 7…",
-    "Question 8…",
-    "Question 9…",
-    "Question 10…",
-    "Question 11…",
-    "Question 12…"
+    {
+        q: "Qu’est‑ce que le CNPR ?",
+        a: "Le CNPR est le Centre National de la Paie du Recouvrement. Il s’agit d’un centre spécialisé du réseau URSSAF chargé de produire la paie pour les agents, en appliquant les règles nationales et les procédures internes."
+    },
+    {
+        q: "Combien d’organismes sont gérés par le CNPR Centre‑Val de Loire ?",
+        a: "Le CNPR Centre‑Val de Loire gère 9 organismes."
+    },
+    {
+        q: "Combien de bulletins de salaire sont traités chaque mois ?",
+        a: "Le CNPR Centre‑Val de Loire produit environ 6 200 à 6 300 bulletins de salaire par mois."
+    },
+    {
+        q: "Peut‑on centraliser les bulletins de salaire électroniquement ?",
+        a: "Oui, via le coffre‑fort numérique DIGIPOSTE : stockage sécurisé, conservation à vie, accès 24/7."
+    },
+    {
+        q: "Comment sont calculés les titres restaurant ?",
+        a: "Valeur faciale : 12,00 € — Part employeur : 7,20 € — Part salarié : 4,80 €. Prélèvement : 4,80 € × nombre de titres. Règle M‑2 : titres de mars → éléments de janvier ; titres d’avril → éléments de février."
+    },
+    {
+        q: "Comment est calculé le salaire brut ?",
+        a: "Formule URSSAF : (Coefficient + Compétences + Expérience) × Valeur du point (7,60939 € en 2026)."
+    },
+    {
+        q: "Combien de CNPR existe‑t‑il en France ?",
+        a: "Il existe 3 CNPR : Centre‑Val de Loire, Midi‑Pyrénées, Rhône‑Alpes."
+    },
+    {
+        q: "Combien de personnes travaillent dans le service ?",
+        a: "Le CNPR Centre‑Val de Loire compte 20 agents, dont 1 manager et 3 assistantes techniques."
+    },
+    {
+        q: "Que faire si j’ai des questions sur ma paie ?",
+        a: "Contacter la Gestion Administrative (GA) : mail ga.cvl@urssaf.fr, ticket GLPI via PRISM, ou formulaire dans le DEA."
+    },
+    {
+        q: "Quel est le montant du PMSS ?",
+        a: "Le PMSS 2026 est de 4 005 €."
+    },
+    {
+        q: "Qu’est‑ce que le Montant Net Social (MNS) ?",
+        a: "Le MNS est le revenu net après cotisations sociales obligatoires. Il sert notamment pour la Prime d’activité, le RSA et d’autres prestations sociales."
+    },
+    {
+        q: "Qu’est‑ce que la DSN ?",
+        a: "La DSN est une transmission mensuelle obligatoire regroupant données de paie, cotisations et événements. Elle remplace la majorité des anciennes déclarations sociales."
+    }
 ];
 
 // -----------------------------
@@ -60,7 +97,20 @@ drawWheel();
 // Spin centré sur le segment
 // -----------------------------
 document.getElementById("spinBtn").addEventListener("click", () => {
-    const selectedIndex = Math.floor(Math.random() * questions.length);
+    if (spinning) return;
+    spinning = true;
+
+    let available = questions
+        .map((q, i) => i)
+        .filter(i => !usedQuestions.includes(i));
+
+    if (available.length === 0) {
+        alert(`${teams[activeTeam].name} a terminé ! Score : ${teams[activeTeam].score}`);
+        nextTeam();
+        return;
+    }
+
+    const selectedIndex = available[Math.floor(Math.random() * available.length)];
     const stopAngle = (selectedIndex * segmentAngle) + (segmentAngle / 2);
 
     canvas.style.transition = "transform 4s ease-out";
@@ -68,6 +118,7 @@ document.getElementById("spinBtn").addEventListener("click", () => {
 
     setTimeout(() => {
         showQuestion(selectedIndex);
+        spinning = false;
     }, 4000);
 });
 
@@ -75,34 +126,35 @@ document.getElementById("spinBtn").addEventListener("click", () => {
 // Affichage question
 // -----------------------------
 function showQuestion(index) {
-    document.getElementById("questionText").textContent = questions[index];
-    document.getElementById("questionBox").style.display = "block";
-}
+    usedQuestions.push(index);
 
-// -----------------------------
-// Validation réponse
-// -----------------------------
-document.getElementById("validateBtn").addEventListener("click", () => {
-    teams[activeTeam].score++;
-    nextTurn();
-});
+    document.getElementById("questionText").textContent = questions[index].q;
+    document.getElementById("questionBox").style.display = "block";
+
+    document.getElementById("validateBtn").onclick = () => {
+        teams[activeTeam].score++;
+        nextTurn();
+    };
+}
 
 // -----------------------------
 // Gestion des équipes
 // -----------------------------
 function nextTurn() {
-    questionIndex++;
-
-    if (questionIndex >= questions.length) {
+    if (usedQuestions.length >= questions.length) {
         alert(`${teams[activeTeam].name} a terminé ! Score : ${teams[activeTeam].score}`);
+        nextTeam();
+        return;
+    }
+}
 
-        activeTeam++;
-        questionIndex = 0;
+function nextTeam() {
+    activeTeam++;
+    usedQuestions = [];
 
-        if (activeTeam >= teams.length) {
-            showFinalScores();
-            return;
-        }
+    if (activeTeam >= teams.length) {
+        showFinalScores();
+        return;
     }
 
     updateActiveTeamHalo();
