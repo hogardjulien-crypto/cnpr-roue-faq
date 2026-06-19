@@ -85,3 +85,13 @@ button {
     width: auto;
     z-index: 1000;
 }
+
+#answerBox {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #005AAA; /* Bleu URSSAF */
+    font-weight: bold;
+}
+.hidden {
+    display: none;
+}
