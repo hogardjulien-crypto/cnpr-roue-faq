@@ -16,6 +16,9 @@
         <div class="team" id="team2">Équipe 3</div>
     </div>
 
+    <div id="scores"></div>
+    <div id="timer"></div>
+
     <div id="wheel-container">
         <canvas id="wheel" width="500" height="500"></canvas>
         <div id="cursor">▼</div>
@@ -25,7 +28,26 @@
 
     <div id="questionBox">
         <h2 id="questionText"></h2>
-        <button id="validateBtn">Valider la réponse</button>
+    </div>
+
+    <!-- POPUP DOUBLE POINTS -->
+    <div id="doublePopup" class="popup hidden">
+        <p>Souhaites‑tu activer le mode DOUBLE POINTS pour cette question ?</p>
+        <button id="doubleYes">Oui</button>
+        <button id="doubleNo">Non</button>
+    </div>
+
+    <!-- POPUP VALIDATION -->
+    <div id="answerPopup" class="popup hidden">
+        <p>L’équipe a‑t‑elle trouvé la bonne réponse ?</p>
+        <button id="answerYes">Oui</button>
+        <button id="answerNo">Non</button>
+    </div>
+
+    <!-- POPUP PASSAGE ÉQUIPE -->
+    <div id="nextTeamPopup" class="popup hidden">
+        <p>L’équipe a terminé. Passer à l’équipe suivante ?</p>
+        <button id="nextTeamYes">Oui</button>
     </div>
 
     <script src="script.js"></script>
